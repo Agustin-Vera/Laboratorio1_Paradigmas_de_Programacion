@@ -1,6 +1,7 @@
 #lang racket
 
 (require "TDA_Option_21065666_VeraRojas.rkt")
+(require "TDA_Flow_21065666_VeraRojas.rkt")
 
 ;######################################################################################
 ;        RFN - TDA Algo - Algo
@@ -29,3 +30,16 @@ op1
 ;opción 1 vinculada al chatbot 4 con su flujo 3 (asumiendo su existencia) en sistema
 (define op2 (option  2 "2) Estudiar" 4 3 "aprender" "perfeccionarme"))
 op2
+
+;######################################################################################
+;        RF3 - TDA Flow - Constructor
+;######################################################################################
+;Descripcion de la funcion: Crea un TDA flow
+;Dominio: name(string) X option*
+;Recorrido: flow
+;Tipo de recursion: N/A
+(define flow (lambda (id name-msg . option)
+    (list id name-msg (add-unique-options option))))
+
+(define f10 (flow 1 "flujo1" op1 op2 op2 op2 op2 op1)) ;solo añade una ocurrencia de op2
+f10

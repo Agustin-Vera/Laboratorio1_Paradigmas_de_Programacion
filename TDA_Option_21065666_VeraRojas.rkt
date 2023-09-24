@@ -12,10 +12,19 @@
 ;        Pertenencias
 ;######################################################################################
 
+;Compara el code de una opcion y una nueva opcion
+(define equal-option-code? (lambda (option new-option)
+    (cond ((null? option) #f)
+          ((= (get-option-code option) (get-option-code new-option)) #t)
+          (else #f))))
 
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
+
+(define get-option-code car)
+(define get-option-message cadr)
+
 
 ;######################################################################################
 ;        Otras funciones

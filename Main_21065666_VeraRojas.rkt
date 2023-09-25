@@ -2,6 +2,7 @@
 
 (require "TDA_Option_21065666_VeraRojas.rkt")
 (require "TDA_Flow_21065666_VeraRojas.rkt")
+(require "TDA_Chatbot_21065666_VeraRojas.rkt")
 
 ;######################################################################################
 ;        RFN - TDA Algo - Algo
@@ -61,3 +62,17 @@ f10
 
 (define f11 (flow-add-option f10 op1)) ;se intenta añadir opción duplicada
 f11
+
+
+;######################################################################################
+;        RF5 - TDA Chatbot - Constructor
+;######################################################################################
+;Descripcion de la funcion: Crea un TDA chatbot
+;Dominio: chatbotID(int) X name(string) X welcomeMessage(string) X flows
+;Recorrido: chatbot
+;Tipo de recursion: N/A
+(define chatbot (lambda (chatbotID name welcomeMessage startFlowID . flows)
+    (list chatbotID name welcomeMessage startFlowID (add-unique-flows flows))))
+
+(define cb0 (chatbot 0 "Inicial" "Bienvenido\n¿Qué te gustaría hacer?" 1 f10 f10 f10 f10))  ;solo añade una ocurrencia de f10
+cb0

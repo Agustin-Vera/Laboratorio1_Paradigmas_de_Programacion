@@ -43,3 +43,21 @@ op2
 
 (define f10 (flow 1 "flujo1" op1 op2 op2 op2 op2 op1)) ;solo añade una ocurrencia de op2
 f10
+
+
+;######################################################################################
+;        RF4 - TDA Flow - Modificador
+;######################################################################################
+;Descripcion de la funcion: Agrega una opcion a un flujo
+;Dominio: flow X option
+;Recorrido: flow
+;Tipo de recursion: N/A 
+(define flow-add-option (lambda (flow option)
+    (if (not (option-exist? (get-flow-options flow) option))
+        (new-flow (get-flow-id flow)
+                  (get-flow-name-msg flow)
+                  (add-option-to-options flow option))
+        flow)))  
+
+(define f11 (flow-add-option f10 op1)) ;se intenta añadir opción duplicada
+f11

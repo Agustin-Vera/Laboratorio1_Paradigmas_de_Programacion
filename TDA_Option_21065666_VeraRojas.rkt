@@ -18,6 +18,11 @@
           ((= (get-option-code option) (get-option-code new-option)) #t)
           (else #f))))
 
+(define option-exist? (lambda (options new-option) ;este map retorna '() la primera vez
+        (if (equal? (null? (filter (lambda (x) (equal? x #t)) 
+                        (map (lambda (option) (equal-option-code? option new-option)) options))) #f)
+            #t
+            #f)))
 ;######################################################################################
 ;        Selectores
 ;######################################################################################

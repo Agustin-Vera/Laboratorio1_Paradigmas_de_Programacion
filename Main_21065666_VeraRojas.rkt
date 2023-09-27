@@ -76,3 +76,23 @@ f11
 
 (define cb0 (chatbot 0 "Inicial" "Bienvenido\n¿Qué te gustaría hacer?" 1 f10 f10 f10 f10))  ;solo añade una ocurrencia de f10
 cb0
+
+
+;######################################################################################
+;        RF6 - TDA Chatbot - Modificador
+;######################################################################################
+;Descripcion de la funcion: Agrega un unico flujo a un chatbot 
+;Dominio: chatbot X flow
+;Recorrido: chatbot
+;Tipo de recursion: Recursion de cola
+(define chatbot-add-flow (lambda (chatbot flow)
+    (if (not (flow-exist? (get-chatbot-flows chatbot) flow))
+        (new-chatbot (get-chatbot-id chatbot)
+                     (get-chatbot-name chatbot)
+                     (get-chatbot-welcomeMsg chatbot)
+                     (get-chatbot-startFlowID chatbot)
+                     (add-flow-to-flows (get-chatbot-flows chatbot) flow))
+        chatbot)))
+    
+(define cb1 (chatbot-add-flow cb0 f10)) 
+cb1

@@ -29,6 +29,11 @@
 ;        Pertenencias
 ;######################################################################################
 
+(define flow-exist? (lambda (flows flow)
+    (cond ((null? flows) #f)
+          ((= (get-flow-id (car flows)) (get-flow-id flow)) #t)
+          (else (flow-exist? (cdr flows) flow)))))
+
 (define equal-flow-id? (lambda (flow new-flow)
     (cond ((null? flow) #f)
           ((= (get-flow-id flow) (get-flow-id new-flow)) #t)

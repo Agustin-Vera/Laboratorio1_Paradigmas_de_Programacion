@@ -14,6 +14,16 @@
     (list id name welcomeMessage startFlowID flows)))
 
 
+;######################################################################################
+;        Pertenencias
+;######################################################################################
+
+(define equal-chatbot-id? (lambda (chatbot new-chatbot)
+    (cond ((null? chatbot) #f)
+          ((= (get-chatbot-id chatbot) (get-chatbot-id new-chatbot)) #t)
+          (else #f))))
+
+
 
 ;######################################################################################
 ;        Selectores
@@ -23,6 +33,10 @@
 (define get-chatbot-welcomeMsg caddr)
 (define get-chatbot-startFlowID cadddr)
 (define get-chatbot-flows (lambda (flow) (cadddr (cdr flow))))
+
+;No recursivo
+(define get-chatbot-by-id (lambda (chatbots id)
+    (car (filter (lambda (chatbot) (equal? (get-chatbot-id chatbot) id)) chatbots))))
 
 
 ;######################################################################################

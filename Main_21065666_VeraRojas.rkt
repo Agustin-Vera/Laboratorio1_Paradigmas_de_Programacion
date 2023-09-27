@@ -3,6 +3,7 @@
 (require "TDA_Option_21065666_VeraRojas.rkt")
 (require "TDA_Flow_21065666_VeraRojas.rkt")
 (require "TDA_Chatbot_21065666_VeraRojas.rkt")
+(require "TDA_System_21065666_VeraRojas.rkt")
 
 ;######################################################################################
 ;        RFN - TDA Algo - Algo
@@ -96,3 +97,26 @@ cb0
     
 (define cb1 (chatbot-add-flow cb0 f10)) 
 cb1
+
+
+;######################################################################################
+;        RF7 - TDA System - Constructor
+;######################################################################################
+;Descripcion de la funcion: Crea un TDA system
+;Dominio: name(string) X initialChatbotCodeLink(int) X chatbot*
+;Recorrido: System
+;Tipo de recursion: N/A
+(define system (lambda (name initialChatbotCodeLink . chatbot)
+    (cond ((null? chatbot) (list name initialChatbotCodeLink (add-unique-chatbots chatbot) null null
+                                 initialChatbotCodeLink null make-date))
+          (else (list name initialChatbotCodeLink (add-unique-chatbots chatbot) null null 
+                      initialChatbotCodeLink
+                      (get-initial-flow-id-by-initialChatbotCodeLink chatbot initialChatbotCodeLink)
+                      make-date)))))
+
+;creando la un nuevo sistema de chatbots con nombre “NewSystem”
+(define s0 (system "NewSystem" 0))
+s0
+;alternativamente podría usarse:
+(define s1 (system "NewSystem"  0 cb1))
+s1

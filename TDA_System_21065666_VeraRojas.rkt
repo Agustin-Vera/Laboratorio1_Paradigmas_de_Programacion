@@ -1,6 +1,8 @@
 #lang racket
 
 (require "TDA_Chatbot_21065666_VeraRojas.rkt")
+(require "TDA_User_21065666_VeraRojas.rkt")
+(require "TDA_Chathistory_21065666_VeraRojas.rkt")
 
 ;######################################################################################
 ;        TDA System
@@ -48,6 +50,13 @@
 ;Retorna la lista de options con la opcion agregada a esta
 (define add-chatbot-to-chatbots (lambda (system chatbot)
     (cons chatbot (get-system-chatbots system))))
+
+
+(define add-chatHistory-to-system (lambda (user chatHistory-list)
+    (cons (chatHistory user) chatHistory-list)))
+
+(define add-user-to-users (lambda (system user)
+    (cons user (get-system-users system))))
 
 ;######################################################################################
 ;        Otras funciones

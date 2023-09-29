@@ -4,6 +4,7 @@
 (require "TDA_Flow_21065666_VeraRojas.rkt")
 (require "TDA_Chatbot_21065666_VeraRojas.rkt")
 (require "TDA_System_21065666_VeraRojas.rkt")
+(require "TDA_User_21065666_VeraRojas.rkt")
 
 ;######################################################################################
 ;        RFN - TDA Algo - Algo
@@ -143,3 +144,30 @@ s11
 
 (define s1 (system-add-chatbot s0 cb0)) ;igual a s0
 s1
+
+
+;######################################################################################
+;        RF9 - TDA System - Algo
+;######################################################################################
+;Descripcion de la funcion: Agrega un usuario a un system
+;Dominio: system X user(string)
+;Recorrido: system
+;Tipo de recursion:  
+(define system-add-user (lambda (system user)
+    (if (not (user-exist? (get-system-users system) user))
+        (new-system (get-system-name system)
+                    (get-system-initial-chatbot-code-link system)
+                    (get-system-chatbots system)
+                    (add-user-to-users system (new-user user #f))
+                    (add-chatHistory-to-system user (get-system-chat-history system))
+                    (get-system-current-chatbotID system)
+                    (get-system-current-flowID system)
+                    (get-system-date system))
+        system)))
+
+
+(define s2 (system-add-user s1 "user1"))
+(define s3 (system-add-user s2 "user2"))
+(define s4 (system-add-user s3 "user2")) ;solo añade un ocurrencia de user2
+(define s5 (system-add-user s4 "user3"))
+s5

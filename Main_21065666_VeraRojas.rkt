@@ -118,5 +118,28 @@ cb1
 (define s0 (system "NewSystem" 0))
 s0
 ;alternativamente podría usarse:
-(define s1 (system "NewSystem"  0 cb1))
+(define s11 (system "NewSystem"  0 cb1))
+s11
+
+
+;######################################################################################
+;        RF8 - TDA System - Algo
+;######################################################################################
+;Descripcion de la funcion: Agrega un chatbot un system 
+;Dominio: system X chatbot
+;Recorrido: system
+;Tipo de recursion: N/A
+(define system-add-chatbot (lambda (system chatbot)
+    (if (not (chatbot-exist? (get-system-chatbots system) chatbot))
+        (new-system (get-system-name system)
+                    (get-system-initial-chatbot-code-link system)
+                    (add-chatbot-to-chatbots system chatbot)
+                    (get-system-users system)
+                    (get-system-chat-history system)
+                    (get-system-current-chatbotID system)
+                    (add-system-current-flow-id system chatbot)
+                    (get-system-date system))
+        system)))
+
+(define s1 (system-add-chatbot s0 cb0)) ;igual a s0
 s1

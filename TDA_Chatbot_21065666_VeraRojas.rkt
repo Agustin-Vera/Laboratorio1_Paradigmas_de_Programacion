@@ -23,6 +23,11 @@
           ((= (get-chatbot-id chatbot) (get-chatbot-id new-chatbot)) #t)
           (else #f))))
 
+(define chatbot-exist? (lambda (chatbots new-chatbot) 
+    (if (equal? (null? (filter (lambda (x) (equal? x #t)) 
+                        (map (lambda (chatbot) (equal-chatbot-id? chatbot new-chatbot)) chatbots))) #f)
+        #t
+        #f)))
 
 
 ;######################################################################################

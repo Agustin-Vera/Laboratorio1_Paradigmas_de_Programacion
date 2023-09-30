@@ -36,6 +36,10 @@
 (define get-initial-flow-id-by-initialChatbotCodeLink (lambda (chatbots chatbot-id)
     (get-chatbot-startFlowID (get-chatbot-by-id chatbots chatbot-id))))
 
+(define login-user (lambda (users user-name)
+    (cond ((null? users) users)
+          (else (cons (log-in (car users) user-name) (login-user (cdr users) user-name))))))
+
 
 ;######################################################################################
 ;        Modificadores
@@ -67,5 +71,7 @@
     (cond ((= (get-chatbot-id chatbot) (get-system-initial-chatbot-code-link system)) (get-chatbot-startFlowID chatbot))
           (else (get-system-current-flowID system)))))
 
+(define logged-users? (lambda (system) 
+    (logged-user? (get-system-users system))))
 
 (provide (all-defined-out))

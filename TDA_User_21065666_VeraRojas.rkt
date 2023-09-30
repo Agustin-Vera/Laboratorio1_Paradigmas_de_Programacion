@@ -22,12 +22,19 @@
           ((string-ci=? (get-user-name (car users)) user-name) #t)
           (else (user-exist? (cdr users) user-name)))))
 
-
+(define logged-user? (lambda (users)
+    (cond ((null? users) #f)
+          ((equal? (get-user-status (car users)) #t) #t)
+          (else (logged-user? (cdr users))))))
+          
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
 (define get-user-name car)
 (define get-user-status cadr)
 
+(define log-in (lambda (user user-name)
+    (cond ((string-ci=? (get-user-name user) user-name) (new-user (get-user-name user) #t))
+          (else user))))
 
 (provide (all-defined-out))

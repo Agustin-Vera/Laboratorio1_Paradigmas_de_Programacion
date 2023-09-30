@@ -171,3 +171,22 @@ s1
 (define s4 (system-add-user s3 "user2")) ;solo añade un ocurrencia de user2
 (define s5 (system-add-user s4 "user3"))
 s5
+
+
+;RF10
+(define system-login (lambda (system user)
+    (if (and (user-exist? (get-system-users system) user) (not (logged-users? system)))
+        (new-system (get-system-name system)
+                    (get-system-initial-chatbot-code-link system)
+                    (get-system-chatbots system)
+                    (login-user (get-system-users system) user)
+                    (get-system-chat-history system)
+                    (get-system-current-chatbotID system)
+                    (get-system-current-flowID system)
+                    (get-system-date system))
+       system)))
+
+(define s6 (system-login s5 "user8")) ;user8 no existe. No inicia sesión
+(define s7 (system-login s6 "user1"))
+(define s8 (system-login s7 "user2"))  ;no permite iniciar sesión a user2, pues user1 ya inició sesión
+s8

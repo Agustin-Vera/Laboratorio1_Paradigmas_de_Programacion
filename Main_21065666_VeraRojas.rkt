@@ -124,7 +124,7 @@ s11
 
 
 ;######################################################################################
-;        RF8 - TDA System - Algo
+;        RF8 - TDA System - Modificador
 ;######################################################################################
 ;Descripcion de la funcion: Agrega un chatbot un system 
 ;Dominio: system X chatbot
@@ -147,12 +147,12 @@ s1
 
 
 ;######################################################################################
-;        RF9 - TDA System - Algo
+;        RF9 - TDA System - Modificador
 ;######################################################################################
 ;Descripcion de la funcion: Agrega un usuario a un system
 ;Dominio: system X user(string)
 ;Recorrido: system
-;Tipo de recursion:  
+;Tipo de recursion: N/A
 (define system-add-user (lambda (system user)
     (if (not (user-exist? (get-system-users system) user))
         (new-system (get-system-name system)
@@ -173,7 +173,13 @@ s1
 s5
 
 
-;RF10
+;######################################################################################
+;        RF10 - TDA System
+;######################################################################################
+;Descripcion de la funcion: Inicia la sesion de un usuario existente dentro de un system
+;Dominio: system X user(string)
+;Recorrido: system
+;Tipo de recursion: N/A 
 (define system-login (lambda (system user)
     (if (and (user-exist? (get-system-users system) user) (not (logged-users? system)))
         (new-system (get-system-name system)
@@ -190,3 +196,26 @@ s5
 (define s7 (system-login s6 "user1"))
 (define s8 (system-login s7 "user2"))  ;no permite iniciar sesión a user2, pues user1 ya inició sesión
 s8
+
+
+;######################################################################################
+;        RF11 - TDA System
+;######################################################################################
+;Descripcion de la funcion: Cierra sesion del usuario iniciado
+;Dominio: system
+;Recorrido: system
+;Tipo de recursion: N/A 
+(define system-logout (lambda (system)
+    (if (logged-users? system) 
+        (new-system (get-system-name system)
+                    (get-system-initial-chatbot-code-link system)
+                    (get-system-chatbots system)
+                    (logout-user (get-system-users system))
+                    (get-system-chat-history system)
+                    (get-system-initial-chatbot-code-link system)
+                    (set-system-startFlowID system)
+                    (get-system-date system))
+        system)))
+
+(define s9 (system-logout s8))
+s9

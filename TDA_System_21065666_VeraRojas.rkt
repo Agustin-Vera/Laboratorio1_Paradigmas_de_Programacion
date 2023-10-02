@@ -7,15 +7,30 @@
 ;######################################################################################
 ;        TDA System
 ;######################################################################################
-; name(str) X initialChatbotCodeLink(int) X Chatbots X Users X chatHistorys X currentChatbotID(int) 
-; X currentFlowID(int) X date(string)
+; name(str) X initialChatbotCodeLink(int) X Chatbots X Users X chatHistorys X currentChatbotID(int) X currentFlowID(int) X date(string)
 
 ;######################################################################################
 ;        Constructor
 ;######################################################################################
-;
-(define new-system (lambda (name initialChatbotCodeLink chatbots users chatHistory currentChatbotID currentFlowID date)
-    (list name initialChatbotCodeLink chatbots users chatHistory currentChatbotID currentFlowID date)))
+
+;Descripcion de la funcion: Crea un system
+;Dominio: name(str) X initialChatbotCodeLink(int) X chatbots X users X chatHistorys X currentChatbotID(int) X currentFlowID(int) X date(string)
+;Recorrido: system
+;Tipo de recursion: N/A
+(define new-system (lambda (name initialChatbotCodeLink chatbots users chatHistorys currentChatbotID currentFlowID date)
+    (list name initialChatbotCodeLink chatbots users chatHistorys currentChatbotID currentFlowID date)))
+
+
+;######################################################################################
+;        Pertenencias
+;######################################################################################
+
+;Descripcion de la funcion: Verifica si existe algun usuario iniciado
+;Dominio: system
+;Recorrido: bool
+;Tipo de recursion: N/A 
+(define logged-users? (lambda (system) 
+    (logged-user? (get-system-users system))))
 
 
 ;######################################################################################
@@ -32,10 +47,18 @@
 (define get-system-date (lambda (system) (cadddr (cdr (cdr (cdr (cdr system)))))))
 
 
-
+;Descripcion de la funcion: Obtiene el flowID inicial de un chatbot dado su ID
+;Dominio: chatbots X chatbot-id(int)
+;Recorrido: int
+;Tipo de recursion: N/A
 (define get-initial-flow-id-by-initialChatbotCodeLink (lambda (chatbots chatbot-id)
     (get-chatbot-startFlowID (get-chatbot-by-id chatbots chatbot-id))))
 
+
+;Descripcion de la funcion: Inicia sesion de un usuario existente
+;Dominio: users X user-name(string)
+;Recorrido: users
+;Tipo de recursion: Recursion de cola 
 (define login-user (lambda (users user-name)
     (cond ((null? users) users)
           (else (cons (log-in (car users) user-name) (login-user (cdr users) user-name))))))
@@ -45,33 +68,70 @@
 ;        Modificadores
 ;######################################################################################
 
+;Descripcion de la funcion: Dada una lista de chatbots guarda solo las primeras ocurrencias de estos, comparando sus ID
+;Dominio: chatbots
+;Recorrido: chatbots
+;Tipo de recursion: Recursion de cola
 (define add-unique-chatbots (lambda (chatbots)
     (cond ((null? chatbots) chatbots)
           (else (cons (car chatbots) 
-                (add-unique-chatbots (filter (lambda (chatbot) (not (equal-chatbot-id? (car chatbots) chatbot))) chatbots))))
-    )))
+                (add-unique-chatbots (filter (lambda (chatbot) (not (equal-chatbot-id? (car chatbots) chatbot))) chatbots)))))))
 
-;Retorna la lista de options con la opcion agregada a esta
+
+;Descripcion de la funcion: Agrega un chatbot a una lista de chatbots
+;Dominio: system X chatbot
+;Recorrido: chatbots
+;Tipo de recursion: N/A
 (define add-chatbot-to-chatbots (lambda (system chatbot)
     (cons chatbot (get-system-chatbots system))))
 
 
+;Descripcion de la funcion: Agrega un chatHistory a una lista de chatHistorys
+;Dominio: user(string) X chatHistory-list
+;Recorrido: chatHistory-list
+;Tipo de recursion: N/A
 (define add-chatHistory-to-system (lambda (user chatHistory-list)
     (cons (chatHistory user) chatHistory-list)))
 
+
+;Descripcion de la funcion: Agrega un usuario a una lista de usuarios
+;Dominio: system X user
+;Recorrido: users
+;Tipo de recursion: N/A
 (define add-user-to-users (lambda (system user)
     (cons user (get-system-users system))))
+
+
+;Descripcion de la funcion: Cierra sesion del usuario iniciado
+;Dominio: users
+;Recorrido: users
+;Tipo de recursion: Recursion de cola 
+(define logout-user (lambda (users)
+    (cond ((null? users) users)
+          (else (cons (logout (car users)) (logout-user (cdr users)))))))
+
+
+
+;Descripcion de la funcion: Actualiza el current-flowID del system al startFlowID del chatbot inicial
+;Dominio: system 
+;Recorrido: int
+;Tipo de recursion: N/A 
+(define set-system-startFlowID (lambda (system)
+    (cond ((null? (get-system-chatbots system)) (get-system-current-flowID system))
+          (else (get-chatbot-startFlowID (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system)))))))
 
 ;######################################################################################
 ;        Otras funciones
 ;######################################################################################
 
-;Introduce el current flowID en caso de ser el chatbot inicial
+;Descripcion de la funcion: Obtiene el current flowID en caso de ser el chatbot inicial
+;Dominio: system X chatbot
+;Recorrido: int
+;Tipo de recursion: N/A 
 (define add-system-current-flow-id (lambda (system chatbot)
     (cond ((= (get-chatbot-id chatbot) (get-system-initial-chatbot-code-link system)) (get-chatbot-startFlowID chatbot))
           (else (get-system-current-flowID system)))))
 
-(define logged-users? (lambda (system) 
-    (logged-user? (get-system-users system))))
+
 
 (provide (all-defined-out))

@@ -31,13 +31,70 @@
                         (map (lambda (option) (equal-option-code? option new-option)) options))) #f)
             #t
             #f)))
+
+
+;Descripcion de la funcion: Verifica si una mensaje es valido, si es una keyword o si es un ID existente
+;Dominio: options X message(string)
+;Recorrido: boolean
+;Tipo de recursion: Recursion de cola 
+(define message-is-valid? (lambda (options message)
+    (if (number? (string->number message))
+        (option-exist-rec? options (string->number message))
+        (keyword? options message))))
+
+
+;Descripcion de la funcion: Verifica si existe una option con un code correspondiente
+;Dominio: options X code(int)
+;Recorrido: boolean
+;Tipo de recursion: Recursion de cola 
+(define option-exist-rec? (lambda (options code)
+    (cond ((null? options) #f)
+          ((= code (get-option-code (car options))) #t)
+          (else (option-exist-rec? (cdr options) code)))))
+
+
+;Descripcion de la funcion: Verifica si una palabra es una keyword dentro de una option
+;Dominio: options X word(string)
+;Recorrido: boolean
+;Tipo de recursion: Recursion de cola 
+(define keyword? (lambda (options word)
+    (cond ((null? options) #f) 
+          ((keyword-exist? (get-option-keywords (car options)) word) #t)
+          (else (keyword? (cdr options) word)))))
+
+
+;Descripcion de la funcion: Verifica si una palabra se encuentra dentro de una lista de keywords
+;Dominio: keywords(string-list) x word(string)
+;Recorrido: boolean
+;Tipo de recursion: Recursion de cola
+(define keyword-exist? (lambda (keywords word)
+    (cond ((null? keywords) #f)
+          ((string-ci=? word (car keywords)) #t)
+          (else (keyword-exist? (cdr keywords) word)))))
+
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
 
 (define get-option-code car)
 (define get-option-message cadr)
+(define get-option-ChatbotCodeLink caddr)
+(define get-option-InitialFlowCodeLink cadddr)
+(define get-option-keywords (lambda (option) (cadddr (cdr option))))
 
+
+;Descripcion de la funcion: Obtiene una option dentro de una lista de options dado un message
+;Dominio: options X message(int or string)
+;Recorrido: option
+;Tipo de recursion: N/A 
+(define get-option-by-message (lambda (options message)
+    (if (string? message)
+        (if (keyword-exist? (get-option-keywords (car options)) message)
+            (car options)
+            (get-option-by-message (cdr options) message))
+        (if (= message (get-option-code (car options)))
+            (car options)
+            (get-option-by-message (cdr options) message)))))
 
 ;######################################################################################
 ;        Otras funciones
@@ -50,5 +107,13 @@
 (define transformar-a-minusculas (lambda (palabras)
     (map string-downcase palabras)))
 
+
+;Descripcion de la funcion: Crea el string con todas las options que tenga
+;Dominio: options
+;Recorrido: string
+;Tipo de recursion: Recursion de cola
+(define options-to-string-rec (lambda (options)
+    (cond ((null? options) "\n")
+          (else (string-append (get-option-message (car options)) "\n" (options-to-string-rec (cdr options)))))))
 
 (provide (all-defined-out))

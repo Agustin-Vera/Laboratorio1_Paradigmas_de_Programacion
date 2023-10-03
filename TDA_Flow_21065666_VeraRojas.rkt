@@ -29,6 +29,14 @@
 (define get-flow-options caddr)
 
 
+;Descripcion de la funcion: Obtiene un flow dado su ID
+;Dominio: flows X id(int)
+;Recorrido: flow
+;Tipo de recursion: Recursion de cola 
+(define get-flow-by-id-rec (lambda (flows id)
+    (cond ((null? flows) flows)
+          ((= (get-flow-id (car flows)) id) (car flows))
+          (else (get-flow-by-id-rec (cdr flows) id)))))
 ;######################################################################################
 ;        Pertenencias
 ;######################################################################################

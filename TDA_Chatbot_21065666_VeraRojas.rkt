@@ -1,6 +1,7 @@
 #lang racket
 
 (require "TDA_Flow_21065666_VeraRojas.rkt")
+(require "TDA_Option_21065666_VeraRojas.rkt")
 
 ;######################################################################################
 ;        TDA ChatBot
@@ -61,6 +62,15 @@
 (define get-chatbot-by-id (lambda (chatbots id)
     (car (filter (lambda (chatbot) (equal? (get-chatbot-id chatbot) id)) chatbots))))
 
+
+;Descripcion de la funcion: Obtiene un chatbot dado su ID desde una lista de chatbots 
+;Dominio: chatbots X id(int)
+;Recorrido: chatbot
+;Tipo de recursion: Recursion de cola
+(define get-chatbot-by-id-rec (lambda (chatbots id)
+    (cond ((null? chatbots) chatbots)
+          ((equal? (get-chatbot-id (car chatbots)) id) (car chatbots))
+          (else (get-chatbot-by-id (cdr chatbots) id)))))
 
 ;######################################################################################
 ;        Modificadores

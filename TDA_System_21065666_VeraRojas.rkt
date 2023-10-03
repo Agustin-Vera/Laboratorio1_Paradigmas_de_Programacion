@@ -3,6 +3,9 @@
 (require "TDA_Chatbot_21065666_VeraRojas.rkt")
 (require "TDA_User_21065666_VeraRojas.rkt")
 (require "TDA_Chathistory_21065666_VeraRojas.rkt")
+(require "TDA_Flow_21065666_VeraRojas.rkt")
+(require "TDA_Option_21065666_VeraRojas.rkt")
+
 
 ;######################################################################################
 ;        TDA System
@@ -111,7 +114,6 @@
           (else (cons (logout (car users)) (logout-user (cdr users)))))))
 
 
-
 ;Descripcion de la funcion: Actualiza el current-flowID del system al startFlowID del chatbot inicial
 ;Dominio: system 
 ;Recorrido: int
@@ -120,6 +122,31 @@
     (cond ((null? (get-system-chatbots system)) (get-system-current-flowID system))
           (else (get-chatbot-startFlowID (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system)))))))
 
+
+;Descripcion de la funcion: Obtiene el ID del chatbot al cual apunta la simulacion (la entrada del usuario y el link de la option)
+;Dominio: system X user-message(string) 
+;Recorrido: int
+;Tipo de recursion: N/A 
+(define change-system-current-chatbot-id (lambda (system user-message)
+    (if (message-is-valid? (get-flow-options (get-flow-by-id-rec (get-chatbot-flows (get-chatbot-by-id-rec (get-system-chatbots system) (get-system-current-chatbotID system)))
+                                            (get-system-current-flowID system))) user-message)
+        (get-option-ChatbotCodeLink (get-option-by-message 
+                                    (get-flow-options (get-flow-by-id-rec (get-chatbot-flows 
+                                    (get-chatbot-by-id-rec (get-system-chatbots system) (get-system-current-chatbotID system))) (get-system-current-flowID system))) (transform-message user-message)))
+        (get-system-current-chatbotID system))))
+
+
+;Descripcion de la funcion: Obtiene el ID del flow al cual apunta la simulacion (la entrada del usuario y el link de la option)
+;Dominio: system X user-message(string) 
+;Recorrido: int
+;Tipo de recursion: N/A 
+(define change-system-current-flow-id (lambda (system user-message)
+    (if (message-is-valid? (get-flow-options (get-flow-by-id-rec (get-chatbot-flows (get-chatbot-by-id-rec (get-system-chatbots system) (get-system-current-chatbotID system)))
+                                            (get-system-current-flowID system))) user-message)
+        (get-option-InitialFlowCodeLink (get-option-by-message 
+                                        (get-flow-options (get-flow-by-id-rec (get-chatbot-flows 
+                                        (get-chatbot-by-id-rec (get-system-chatbots system) (get-system-current-chatbotID system))) (get-system-current-flowID system))) (transform-message user-message)))
+        (get-system-current-flowID system))))
 ;######################################################################################
 ;        Otras funciones
 ;######################################################################################
@@ -133,5 +160,23 @@
           (else (get-system-current-flowID system)))))
 
 
+;Descripcion de la funcion: Agrega una interaccion de un usuario con un chatbot al chatHistory de un usuario
+;Dominio: system X message(string) X current-chatbot-id(int) X current-flow-id(int)
+;Recorrido: chatHistorys
+;Tipo de recursion: Recursion de cola
+(define new-interaction-rec (lambda (system message current-chatbot-id current-flow-id)
+    (if (message-is-valid? (get-flow-options (get-flow-by-id-rec (get-chatbot-flows (get-chatbot-by-id-rec (get-system-chatbots system) current-chatbot-id))
+                           current-flow-id)) message)
+
+            (update-chatHistory (get-logged-user (get-system-users system)) message
+                                (get-system-chat-history system)
+                                (get-chatbot-by-id-rec (get-system-chatbots system) current-chatbot-id)
+                                current-flow-id
+                                (get-system-chatbots system))
+                                
+            (repeat-message-chatHistory (get-logged-user (get-system-users system)) message
+                                        (get-system-chat-history system)
+                                        (get-chatbot-by-id-rec (get-system-chatbots system) current-chatbot-id)
+                                        current-flow-id))))
 
 (provide (all-defined-out))

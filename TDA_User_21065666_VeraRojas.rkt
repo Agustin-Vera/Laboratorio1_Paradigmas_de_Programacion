@@ -47,6 +47,15 @@
 (define get-user-status cadr)
 
 
+;Descripcion de la funcion: Obtiene al usuario iniciado
+;Dominio: users
+;Recorrido: user
+;Tipo de recursion: Recursion natural 
+(define get-logged-user (lambda (users)
+    (cond ((null? users) users)
+          ((equal? #t (get-user-status (car users))) (car users))
+          (else (get-logged-user (cdr users))))))
+
 ;######################################################################################
 ;        Modificadores
 ;######################################################################################

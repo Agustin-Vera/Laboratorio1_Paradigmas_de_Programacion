@@ -217,6 +217,16 @@
         system)))
 
 
+;######################################################################################
+;        RF14
+;######################################################################################
+;Descripcion de la funcion: Obtiene una sintesis de las interacciones de un usuario y el sistema
+;Dominio: system X usuario(string)
+;Recorrido: string
+;Tipo de recursion: N/A
+(define system-synthesis (lambda (system usuario)  
+    (get-chatHistory (car (filter (lambda (chatHistory) (string-ci=? usuario (get-chatHistory-user chatHistory))) (get-system-chat-history system))))))
+
 
 ;######################################################################################
 ;        Script de Pruebas Numero 2
@@ -275,9 +285,8 @@
 (define s15 (system-talk-rec s14 "1"))
 (define s16 (system-talk-rec s15 "3"))
 (define s17 (system-talk-rec s16 "5"))
-
-;(display (get-chatHistory (cadr (get-system-chat-history s17))))
 ;s17
+;(display (system-synthesis s17 "user2"))
 
 (define s11-norec (system-talk-norec s10 "hola"))
 (define s12-norec (system-talk-norec s11 "1"))
@@ -286,5 +295,5 @@
 (define s15-norec (system-talk-norec s14 "1"))
 (define s16-norec (system-talk-norec s15 "3"))
 (define s17-norec (system-talk-norec s16 "5"))
-(display (get-chatHistory (cadr (get-system-chat-history s17-norec))))
 ;s17-norec
+(display (system-synthesis s17-norec "user2"))

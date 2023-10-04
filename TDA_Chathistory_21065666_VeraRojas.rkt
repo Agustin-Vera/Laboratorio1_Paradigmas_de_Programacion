@@ -102,6 +102,43 @@
                 (repeat-message-chatHistory user user-message (cdr chatHistorys) chatbot flow-id)))
           (else (cons (car chatHistorys) (repeat-message-chatHistory user user-message (cdr chatHistorys) chatbot flow-id))))))
 
+
+;Descripcion de la funcion: Agrega una interacion realizada por el usuario y un chatbot
+;Dominio: chatHistorys X user-name(string) X user-interaction(string)
+;Recorrido: chatHistory
+;Tipo de recursion: N/A
+(define update-chatHistory-user (lambda (chatHistory user-name user-interaction)
+    (cond ((string-ci=? (get-chatHistory-user chatHistory) user-name) (new-chatHistory (get-chatHistory-user chatHistory)
+                                                                                       (string-append (get-chatHistory chatHistory) user-interaction)))
+          (else chatHistory))))
+
+
+;Descripcion de la funcion: Actualiza el chatHistory del usuario que realizo la interacion
+;Dominio: chatHistorys X user-name(string) X user-interaction(string)
+;Recorrido: chatHistorys
+;Tipo de recursion: N/A
+(define update-chatHistory-norec (lambda (chatHistorys user-name user-interaction)
+    (map (lambda (chatHistory) (update-chatHistory-user chatHistory user-name user-interaction)) chatHistorys)))
+
+
+;Descripcion de la funcion: Agrega una interacion realizada por el usuario y un chatbot
+;Dominio: chatHistory X user X chatbot X flowID(int) X user-message(string)
+;Recorrido: chatHistory
+;Tipo de recursion: N/A
+(define repeat-message (lambda (chatHistory user chatbot flowID user-message)
+    (cond ((string-ci=? (get-chatHistory-user chatHistory) (get-user-name user)) (new-chatHistory (get-chatHistory-user chatHistory)
+                                                                                                  (string-append (get-chatHistory chatHistory)
+                                                                                                                 (make-chat-message user user-message chatbot flowID))))
+          (else chatHistory))))
+
+
+;Descripcion de la funcion: Actualiza el chatHistory del usuario que realizo la interacion, el chatbot repite el mensaje
+;Dominio: user X chatHistorys X chatbot X flowID(int) X user-message(string)
+;Recorrido: chatHistorys
+;Tipo de recursion: N/A
+(define repeat-chatHistory-norec (lambda (user chatHistorys chatbot flowID user-message)
+    (map (lambda (chatHistory) (repeat-message chatHistory user chatbot flowID user-message)) chatHistorys)))
+
 ;######################################################################################
 ;        Otras funciones
 ;######################################################################################

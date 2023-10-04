@@ -178,7 +178,7 @@
 
 
 ;######################################################################################
-;        RF12 - TDA System
+;        RF12
 ;######################################################################################
 ;Descripcion de la funcion: Permite a un usuario interactuar con un chatbot
 ;Dominio: system X message(string)
@@ -195,6 +195,27 @@
                     (change-system-current-flow-id system message)
                     (get-system-date system))
         system)))
+
+
+;######################################################################################
+;        RF13
+;######################################################################################
+;Descripcion de la funcion: Permite a un usuario interactuar con un chatbot
+;Dominio: system X message(string)
+;Recorrido: system
+;Tipo de recursion: N/A
+(define system-talk-norec (lambda (system message)
+    (if (logged-users? system)
+        (new-system (get-system-name system)
+                    (get-system-initial-chatbot-code-link system)
+                    (get-system-chatbots system)
+                    (get-system-users system)
+                    (new-interaction-norec system message)
+                    (change-system-current-chatbot-id-norec system message)
+                    (change-system-current-flow-id-norec system message)
+                    (get-system-date system))
+        system)))
+
 
 
 ;######################################################################################
@@ -257,3 +278,13 @@
 
 ;(display (get-chatHistory (cadr (get-system-chat-history s17))))
 ;s17
+
+(define s11-norec (system-talk-norec s10 "hola"))
+(define s12-norec (system-talk-norec s11 "1"))
+(define s13-norec (system-talk-norec s12 "1"))
+(define s14-norec (system-talk-norec s13 "Museo"))
+(define s15-norec (system-talk-norec s14 "1"))
+(define s16-norec (system-talk-norec s15 "3"))
+(define s17-norec (system-talk-norec s16 "5"))
+(display (get-chatHistory (cadr (get-system-chat-history s17-norec))))
+;s17-norec

@@ -72,6 +72,15 @@
           ((equal? (get-chatbot-id (car chatbots)) id) (car chatbots))
           (else (get-chatbot-by-id (cdr chatbots) id)))))
 
+
+;Descripcion de la funcion: Obtiene un chatbot dado un message
+;Dominio: chatbots X current-chartbotID(int) X current-flowID(int) X message(string)
+;Recorrido: chatbot
+;Tipo de recursion: Recursion de cola
+(define get-chatbot-by-message (lambda (chatbots current-chartbotID current-flowID message)
+    (get-chatbot-by-id chatbots
+                       (get-option-ChatbotCodeLink (get-option-by-message-norec (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id chatbots current-chartbotID)) current-flowID)) message)))))
+
 ;######################################################################################
 ;        Modificadores
 ;######################################################################################

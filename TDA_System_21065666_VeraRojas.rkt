@@ -58,14 +58,12 @@
     (get-chatbot-startFlowID (get-chatbot-by-id chatbots chatbot-id))))
 
 
-;Descripcion de la funcion: Inicia sesion de un usuario existente
-;Dominio: users X user-name(string)
-;Recorrido: users
-;Tipo de recursion: Recursion de cola 
-(define login-user (lambda (users user-name)
-    (cond ((null? users) users)
-          (else (cons (log-in (car users) user-name) (login-user (cdr users) user-name))))))
-
+;Descripcion de la funcion: Obtiene al usuario iniciado en el system
+;Dominio: system
+;Recorrido: user
+;Tipo de recursion: N/A 
+(define get-system-user-logged (lambda (system)
+    (get-logged-user (get-system-users system))))
 
 ;######################################################################################
 ;        Modificadores
@@ -147,6 +145,7 @@
                                         (get-flow-options (get-flow-by-id-rec (get-chatbot-flows 
                                         (get-chatbot-by-id-rec (get-system-chatbots system) (get-system-current-chatbotID system))) (get-system-current-flowID system))) (transform-message user-message)))
         (get-system-current-flowID system))))
+
 ;######################################################################################
 ;        Otras funciones
 ;######################################################################################
@@ -178,5 +177,50 @@
                                         (get-system-chat-history system)
                                         (get-chatbot-by-id-rec (get-system-chatbots system) current-chatbot-id)
                                         current-flow-id))))
+
+
+;Descripcion de la funcion: Agrega una interaccion de un usuario con un chatbot al chatHistory de un usuario
+;Dominio: system X message(string)
+;Recorrido: chatHistorys
+;Tipo de recursion: N/A
+(define new-interaction-norec (lambda (system message)
+    (if (message-is-valid? (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system)))
+                           (get-system-current-flowID system))) message)
+        
+        (update-chatHistory-norec (get-system-chat-history system) (get-user-name (get-logged-user (get-system-users system))) 
+                                  (make-chat-message (get-logged-user (get-system-users system)) message 
+                                                     (get-chatbot-by-message (get-system-chatbots system) (get-system-current-chatbotID system) (get-system-current-flowID system) message)
+                                                     (get-option-InitialFlowCodeLink (get-option-by-message-norec (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system))) (get-system-current-flowID system))) message)))) 
+                                                     
+        (repeat-chatHistory-norec (get-system-user-logged system) (get-system-chat-history system)
+                                  (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system))
+                                  (get-system-current-flowID system)
+                                  message))))
+
+
+;Descripcion de la funcion: Cambia el current chatbotID dado la option-code o keyword (user-message) ingresado, obtiene el chatbotCodeLink de la option
+;Dominio: system X user-message(string)
+;Recorrido: int
+;Tipo de recursion: N/A
+(define change-system-current-chatbot-id-norec (lambda (system user-message)
+    (if (message-is-valid? (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system)))
+                           (get-system-current-flowID system))) user-message)
+        
+        (get-option-ChatbotCodeLink (get-option-by-message-norec (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system))) 
+                                                                                                   (get-system-current-flowID system))) user-message))
+        (get-system-current-chatbotID system))))
+
+
+;Descripcion de la funcion: Cambia el current flowID dado la option-code o keyword (user-message) ingresado, obtiene el InitialFlowCodeLink de la option
+;Dominio: system X user-message(string)
+;Recorrido: int
+;Tipo de recursion: N/A
+(define change-system-current-flow-id-norec (lambda (system user-message)
+    (if (message-is-valid? (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system)))
+                           (get-system-current-flowID system))) user-message)
+        
+        (get-option-InitialFlowCodeLink (get-option-by-message-norec (get-flow-options (get-flow-by-id (get-chatbot-flows (get-chatbot-by-id (get-system-chatbots system) (get-system-current-chatbotID system))) 
+                                                                                                   (get-system-current-flowID system))) user-message))
+        (get-system-current-flowID system))))
 
 (provide (all-defined-out))

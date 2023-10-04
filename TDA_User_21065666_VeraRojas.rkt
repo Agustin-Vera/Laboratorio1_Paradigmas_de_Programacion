@@ -69,6 +69,15 @@
           (else user))))
 
 
+;Descripcion de la funcion: Inicia sesion de un usuario existente
+;Dominio: users X user-name(string)
+;Recorrido: users
+;Tipo de recursion: Recursion de cola 
+(define login-user (lambda (users user-name)
+    (cond ((null? users) users)
+          (else (cons (log-in (car users) user-name) (login-user (cdr users) user-name))))))
+
+
 ;Descripcion de la funcion: Cierra la sesion de un usuario 
 ;Dominio: user
 ;Recorrido: user

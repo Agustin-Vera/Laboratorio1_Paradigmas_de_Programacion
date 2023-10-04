@@ -86,7 +86,7 @@
 ;Descripcion de la funcion: Obtiene una option dentro de una lista de options dado un message
 ;Dominio: options X message(int or string)
 ;Recorrido: option
-;Tipo de recursion: N/A 
+;Tipo de recursion: N/A
 (define get-option-by-message (lambda (options message)
     (if (string? message)
         (if (keyword-exist? (get-option-keywords (car options)) message)
@@ -96,6 +96,15 @@
             (car options)
             (get-option-by-message (cdr options) message)))))
 
+
+;Descripcion de la funcion: Obtiene una option dentro de una lista de options dado un message
+;Dominio: options X message(int or string)
+;Recorrido: option
+;Tipo de recursion: N/A 
+(define get-option-by-message-norec (lambda (options message)
+    (if (number? (string->number message))
+        (car (filter (lambda (option) (= (string->number message) (get-option-code option))) options))
+        (car (filter (lambda (option) (keyword-exist? (get-option-keywords option) message)) options)))))
 ;######################################################################################
 ;        Otras funciones
 ;######################################################################################

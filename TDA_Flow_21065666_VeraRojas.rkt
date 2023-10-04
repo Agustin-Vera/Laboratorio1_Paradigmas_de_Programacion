@@ -37,6 +37,15 @@
     (cond ((null? flows) flows)
           ((= (get-flow-id (car flows)) id) (car flows))
           (else (get-flow-by-id-rec (cdr flows) id)))))
+
+
+;Descripcion de la funcion: Obtiene un flow dado su ID
+;Dominio: flows X id(int)
+;Recorrido: flow
+;Tipo de recursion: N/A 
+(define get-flow-by-id (lambda (flows id)
+    (car (filter (lambda (flow) (= (get-flow-id flow) id)) flows))))
+
 ;######################################################################################
 ;        Pertenencias
 ;######################################################################################

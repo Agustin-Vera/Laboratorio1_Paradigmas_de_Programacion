@@ -13,6 +13,9 @@
 ;Posterior a estos scripts se encuentran los 3 ejemplos propios para cada requerimiento implementado
 ;Los requerimientos NO implementados se dejaran comentados en los scripts
 
+;Lo que se vera por consola corresponde a solo a los requerimientos que se ejecuten con la funcion display
+;Por ende, solamente se vera por consola lo referente al RF14
+
 
 ;Este script se deja comentado debido a que se tienen los mismos simbolos asociados en el script 2
 ;######################################################################################
@@ -95,7 +98,7 @@
 (define s15 (system-talk-rec s14 "1"))
 (define s16 (system-talk-rec s15 "3"))
 (define s17 (system-talk-rec s16 "5"))
-;(display (system-synthesis s17 "user2"))
+(display (system-synthesis s17 "user2"))
 ;(system-simulate s0 5 32131)
 
 
@@ -130,14 +133,15 @@
 ;######################################################################################
 
 ;Crea el flujo 1 y agrega las primeras opciones con code unico, por ende, op1 no es agregada
-(define f1-cb3 (flow 1 "Flujo 1 Chatbot3\n¿Qué te gustaría ver?" op1-f1-cb3 op2-f1-cb3 op1))
+(define f1-cb3 (flow 1 "Flujo 1 Chatbot 3\n¿Qué te gustaría ver?" op1-f1-cb3 op2-f1-cb3 op1))
 
 ;Crea los flujos correspondientes a peliculas y futbol
-(define f2-cb3 (flow 2 "Flujo 2 Chatbot3\n¿Qué película te gustaría ver?" op1-f2-cb3 op2-f2-cb3))
-(define f3-cb3 (flow 3 "Flujo 3 Chatbot3\n ¿Qué partido te gustaría ver?" op1-f3-cb3 op2-f3-cb3 op3-f3-cb3))
+(define f2-cb3 (flow 2 "Flujo 2 Chatbot 3\n¿Qué película te gustaría ver?" op1-f2-cb3 op2-f2-cb3))
+(define f3-cb3 (flow 3 "Flujo 3 Chatbot 3\n¿Qué partido te gustaría ver?" op1-f3-cb3 op2-f3-cb3 op3-f3-cb3))
 
 ;Auxiliares: Usados en RF flow-add-option
-(define f1-cb3-v2 (flow 1 "Flujo 1 Chatbot3\n¿Qué te gustaría ver?"))
+(define f1-cb3-v2 (flow 1 "Flujo 1 Chatbot 3\n¿Qué te gustaría ver?"))
+(define f0-cb3-v2 (flow 1 "Flujo Principal Chatbot 1\nBienvenido\n¿Qué te gustaría hacer?" op1 op2 op1-f1-cb0))
 
 
 ;######################################################################################
@@ -165,6 +169,8 @@
 ;Chatbot 3: Agrencia de Entretencion
 (define cb3 (chatbot 3 "Agencia Entretención" "Bienvenido\n¿Qué te gustaría ver?" 1 f1-cb3 f2-cb3 f3-cb3))
 
+;Auxiliar: Se utiliza en RF 7
+(define cb0-v2 (chatbot 0 "Inicial" "Bienvenido\n¿Qué te gustaría hacer?" 1 f0-cb3-v2))
 
 ;######################################################################################
 ;        RF6 - chatbot-add-flow
@@ -192,7 +198,7 @@
 
 ;Se intenta crear un system con distintos chatbots, solo agrega las primeras ocurrencias de cb0, cb1, cb2 y cb3
 ;system con 4 chatbots
-(define s0-v2 (system "Chatbots Paradigmas V2" 0 cb0 cb1 cb2 cb3 cb0 cb1 cb2 cb3 cb0 cb1 cb2 cb3))
+(define s0-v2 (system "Chatbots Paradigmas V2" 0 cb0-v2 cb1 cb2 cb3 cb0-v2 cb1 cb2 cb3 cb0 cb1 cb2 cb3))
 
 
 ;######################################################################################
@@ -236,39 +242,60 @@
 
 ;Se intenta iniciar un usuario pero ya hay un usuario iniciado
 (define sys7 (system-login sys6 "Franck"))
-sys7
+
 
 ;######################################################################################
 ;        RF11 - system-logout
 ;######################################################################################
-;(define s9 (system-logout s8))
+
+;Se intenta cerrar sesion en un systema donde no hay usuarios iniciados
+(define sys8 (system-logout sys5))
+
+;Se cierra sesion de un usuario
+(define sys9 (system-logout sys7))
+
+;Se intenta cerrar sesion en un systema donde no hay usuarios iniciados
+(define sys10 (system-logout sys9))
+
+;Auxiliar: Se utiliza en RF12
+(define sys11 (system-login sys10 "Messi"))
 
 
 ;######################################################################################
 ;        RF12 - system-talk-rec
 ;######################################################################################
 
+;Se realizan interacciones entre el sistema de chatbots y un usuario
+(define sys12 (system-talk-rec sys11 "Buenos días"))
+(define sys13 (system-talk-rec sys12 "3"))
+(define sys14 (system-talk-rec sys13 "2"))
+(define sys15 (system-talk-rec sys14 "2"))
 
 
 ;######################################################################################
 ;        RF13 - system-talk-norec
 ;######################################################################################
 
-(define s11-norec (system-talk-norec s10 "hola"))
-(define s12-norec (system-talk-norec s11 "1"))
-(define s13-norec (system-talk-norec s12 "1"))
-(define s14-norec (system-talk-norec s13 "Museo"))
-(define s15-norec (system-talk-norec s14 "1"))
-(define s16-norec (system-talk-norec s15 "3"))
-(define s17-norec (system-talk-norec s16 "5"))
-;s17-norec
-;(display (system-synthesis s17-norec "user2"))
+;Se realizan las mismas interacciones que realizo el user2 en el scrpit de pruebas numero 2
+;Sin embargo el usuario posee distinto nombre, la respuesta es la misma
+(define sys12-norec (system-talk-norec sys11 "hola"))
+(define sys13-norec (system-talk-norec sys12-norec "1"))
+(define sys14-norec (system-talk-norec sys13-norec "1"))
+(define sys15-norec (system-talk-norec sys14-norec "Museo"))
+(define sys16-norec (system-talk-norec sys15-norec "1"))
+(define sys17-norec (system-talk-norec sys16-norec "3"))
+(define sys18-norec (system-talk-norec sys17-norec "5"))
+
 
 ;######################################################################################
 ;        RF14 - system-synthesis
 ;######################################################################################
 
+;Misma synthesis del usuario Messi y el usur2 del script de pruebas numero 2
+(display (system-synthesis sys18-norec "Messi"))
 
+;No se muestra nada debido a que el usuario no a interactuado con el sistema sys12
+(display (system-synthesis sys12 "Gareth"))
 
-
-
+;Se muestra la interaccion del usuario Messi con el sistema sys15, es un system distinto a sys18-norec
+(display (system-synthesis sys15 "Messi"))

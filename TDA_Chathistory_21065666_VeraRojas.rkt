@@ -4,7 +4,6 @@
 (require "TDA_Chatbot_21065666_VeraRojas.rkt")
 (require "TDA_User_21065666_VeraRojas.rkt")
 (require "TDA_Flow_21065666_VeraRojas.rkt")
-(require racket/date)
 
 ;######################################################################################
 ;        TDA ChatHistory
@@ -143,22 +142,11 @@
 ;        Otras funciones
 ;######################################################################################
 
-;Descripcion de la funcion: Le da el formato dia/mes/anio al string de la fecha 
-;Dominio: day(string) X month(string) X year(string)
-;Recorrido: string
-;Tipo de recursion: N/A
-(define date-format (lambda (day month year)
-    (string-append day "/" month "/" year)))
-
-
-;Descripcion de la funcion: Obtiene la fecha del dia de hoy
+;Descripcion de la funcion: Obtiene la hora actual
 ;Dominio: N/A
 ;Recorrido: string
 ;Tipo de recursion: N/A
-(define make-date
-  (date-format (number->string (date-day (current-date)))
-               (number->string (date-month (current-date)))
-               (number->string (date-year (current-date)))))
+(define make-date (number->string (current-seconds)))
 
 
 ;Descripcion de la funcion: Transforma un mensaje en formato string a numero

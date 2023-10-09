@@ -76,6 +76,11 @@
 ;        Selectores
 ;######################################################################################
 
+;Obtienen un elemento dada una option
+;Poseen nombres representativos
+;Dominio: option
+;Recorrido: lo que su nombre indique
+;Tipo de recursion: N/A
 (define get-option-code car)
 (define get-option-message cadr)
 (define get-option-ChatbotCodeLink caddr)
@@ -105,6 +110,8 @@
     (if (number? (string->number message))
         (car (filter (lambda (option) (= (string->number message) (get-option-code option))) options))
         (car (filter (lambda (option) (keyword-exist? (get-option-keywords option) message)) options)))))
+
+
 ;######################################################################################
 ;        Otras funciones
 ;######################################################################################
@@ -117,7 +124,7 @@
     (map string-downcase palabras)))
 
 
-;Descripcion de la funcion: Crea el string con todas las options que tenga
+;Descripcion de la funcion: Crea un string con todas las options que tenga
 ;Dominio: options
 ;Recorrido: string
 ;Tipo de recursion: Recursion de cola

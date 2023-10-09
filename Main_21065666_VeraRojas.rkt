@@ -7,14 +7,6 @@
 (require "TDA_User_21065666_VeraRojas.rkt")
 (require "TDA_Chathistory_21065666_VeraRojas.rkt")
 
-;######################################################################################
-;        RFN - TDA Algo - Algo
-;######################################################################################
-;Descripcion de la funcion: 
-;Dominio: 
-;Recorrido: 
-;Tipo de recursion: 
-
 
 ;######################################################################################
 ;        RF2 - TDA Option - Constructor
@@ -31,7 +23,7 @@
 ;        RF3 - TDA Flow - Constructor
 ;######################################################################################
 ;Descripcion de la funcion: Crea un TDA flow
-;Dominio: name(string) X option*
+;Dominio: id(int) X name(string) X option*
 ;Recorrido: flow
 ;Tipo de recursion: N/A
 (define flow (lambda (id name-msg . option)
@@ -57,7 +49,7 @@
 ;        RF5 - TDA Chatbot - Constructor
 ;######################################################################################
 ;Descripcion de la funcion: Crea un TDA chatbot
-;Dominio: chatbotID(int) X name(string) X welcomeMessage(string) X flows
+;Dominio: chatbotID(int) X name(string) X welcomeMessage(string) X startFlowID(int) X flows
 ;Recorrido: chatbot
 ;Tipo de recursion: N/A
 (define chatbot (lambda (chatbotID name welcomeMessage startFlowID . flows)

@@ -33,6 +33,12 @@
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
+
+;Obtienen un elemento dado un chatHistory
+;Poseen nombres representativos
+;Dominio: chatHistory
+;Recorrido: lo que su nombre indique
+;Tipo de recursion: N/A
 (define get-chatHistory-user car)
 (define get-chatHistory cadr)
 
@@ -85,7 +91,7 @@
           (else (cons (car chatHistorys) (update-chatHistory user user-message (cdr chatHistorys) chatbot flow-id chatbots))))))
 
 
-;Descripcion de la funcion: Actuliza el chatHistory de un usuario, agregando una interacion nueva, el chatbot repite la respuesta anteorior debido a una entrada no valida
+;Descripcion de la funcion: Actuliza el chatHistory de un usuario, agregando una interacion nueva, el chatbot repite la respuesta anterior debido a una entrada no valida
 ;                           No valida hace referencia que se ingreso un code inexistente o una keyword inexistente
 ;Dominio: user X user-message(string) X chatHistorys X chatbot X flow-id(int) chatbots
 ;Recorrido: string

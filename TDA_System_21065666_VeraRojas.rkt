@@ -39,7 +39,12 @@
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
-;
+
+;Obtienen un elemento dado un system
+;Poseen nombres representativos
+;Dominio: system
+;Recorrido: lo que su nombre indique
+;Tipo de recursion: N/A
 (define get-system-name car)
 (define get-system-initial-chatbot-code-link cadr)
 (define get-system-chatbots caddr)

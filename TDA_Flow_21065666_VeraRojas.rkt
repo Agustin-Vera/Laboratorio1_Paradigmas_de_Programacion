@@ -24,6 +24,11 @@
 ;        Selectores
 ;######################################################################################
 
+;Obtienen un elemento dado un flow
+;Poseen nombres representativos
+;Dominio: flow
+;Recorrido: lo que su nombre indique
+;Tipo de recursion: N/A
 (define get-flow-id car)
 (define get-flow-name-msg cadr)
 (define get-flow-options caddr)

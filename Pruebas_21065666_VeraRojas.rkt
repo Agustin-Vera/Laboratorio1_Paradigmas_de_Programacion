@@ -291,7 +291,7 @@
 ;        RF14 - system-synthesis
 ;######################################################################################
 
-;Misma synthesis del usuario Messi y el usur2 del script de pruebas numero 2
+;Misma synthesis del usuario Messi y el user2 del script de pruebas numero 2
 (display (system-synthesis sys18-norec "Messi"))
 
 ;No se muestra nada debido a que el usuario no a interactuado con el sistema sys12

@@ -48,6 +48,12 @@
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
+
+;Obtienen un elemento dado un chatbot
+;Poseen nombres representativos
+;Dominio: chatbot
+;Recorrido: lo que su nombre indique
+;Tipo de recursion: N/A
 (define get-chatbot-id car)
 (define get-chatbot-name cadr)
 (define get-chatbot-welcomeMsg caddr)

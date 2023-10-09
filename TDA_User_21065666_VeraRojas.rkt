@@ -1,7 +1,7 @@
 #lang racket
 
 ;######################################################################################
-;        TDA ChatBot
+;        TDA User
 ;######################################################################################
 ; user-name(string) X status(bool)
 
@@ -31,7 +31,7 @@
           (else (user-exist? (cdr users) user-name)))))
 
 
-;Descripcion de la funcion: Verifica si eexiste un usuario iniciado
+;Descripcion de la funcion: Verifica si existe un usuario iniciado
 ;Dominio: users
 ;Recorrido: boolean
 ;Tipo de recursion: Recursion natural 
@@ -43,6 +43,12 @@
 ;######################################################################################
 ;        Selectores
 ;######################################################################################
+
+;Obtienen un elemento dado un user
+;Poseen nombres representativos
+;Dominio: user
+;Recorrido: lo que su nombre indique
+;Tipo de recursion: N/A
 (define get-user-name car)
 (define get-user-status cadr)
 

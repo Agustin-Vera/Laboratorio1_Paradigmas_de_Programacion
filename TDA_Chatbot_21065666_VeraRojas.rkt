@@ -6,14 +6,14 @@
 ;######################################################################################
 ;        TDA ChatBot
 ;######################################################################################
-; id(int) X name(str) X welcomeMessage(str) startFlowID(int) X flows
+; id(int) X name(str) X welcomeMessage(str) X startFlowID(int) X flows
 
 ;######################################################################################
 ;        Constructor
 ;######################################################################################
 
 ;Descripcion de la funcion: Crea un chatbot 
-;Dominio: id(int) X name(str) X welcomeMessage(str) startFlowID(int) X flows
+;Dominio: id(int) X name(str) X welcomeMessage(str) X startFlowID(int) X flows
 ;Recorrido: chatbot
 ;Tipo de recursion: N/A
 (define new-chatbot (lambda (id name welcomeMessage startFlowID flows)

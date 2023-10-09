@@ -1,11 +1,5 @@
 #lang racket
 
-(require "TDA_Option_21065666_VeraRojas.rkt")
-(require "TDA_Flow_21065666_VeraRojas.rkt")
-(require "TDA_Chatbot_21065666_VeraRojas.rkt")
-(require "TDA_System_21065666_VeraRojas.rkt")
-(require "TDA_User_21065666_VeraRojas.rkt")
-(require "TDA_Chathistory_21065666_VeraRojas.rkt")
 (require "Main_21065666_VeraRojas.rkt")
 
 ;Este documento posee 2 scripts de pruebas y los ejemplos propios para las funciones implementadas

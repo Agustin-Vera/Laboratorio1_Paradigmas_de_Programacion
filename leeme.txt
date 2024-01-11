@@ -1,0 +1,21 @@
+Las entradas a las funciones creadas deben ser las correctas, se deben ingresar
+las entradas que los dominios indiquen, debido a que el programa no verifica/valida
+las entradas de usuario.
+Se asume que se entregaran entradas correctas.
+
+En el script de pruebas solo se verá por consola las funciones que posean display
+en conjunto con su ejecución, por ende, solo se vera por consola lo correspondiente
+a la función system-synthesis.
+Esto es así porque se siguio el ejemplo del script de pruebas proporcionado por coordinación.
+
+Se asume que en las funciones de interacción, system-talk-rec y system-talk-norec la primera vez
+que sean usadas por el usuario, este ingresará una opción no valida
+opción no valida: Un ID no existente o una keyword inexistente
+Ej: "Hola", "Buenos días", etc
+Esto para que el programa envie el mensaje de bienvenida del chatbot inicial
+De no ingresar una opción no valida, el programa no se cae ni entrega errores, lo que pasa
+es que no entrega el mensaje de bienvenida con las primeras opciones del chatbot inicial.
+
+El script de pruebas posee los script 1, 2 y los ejemplos propios, el script 1 se deja comentado
+debido a que posee en su mayoría el mismo contenido del script 2, y se repetian diferentes simbolos
+es por esto que se deja comentado.

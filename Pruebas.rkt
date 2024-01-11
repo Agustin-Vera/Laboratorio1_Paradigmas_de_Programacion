@@ -1,6 +1,6 @@
 #lang racket
 
-(require "Main_21065666_VeraRojas.rkt")
+(require "Main.rkt")
 
 ;Este documento posee 2 scripts de pruebas y los ejemplos propios para las funciones implementadas
 ;Los script de pruebas 1 y 2 corresponden a los brindados por coordinacion

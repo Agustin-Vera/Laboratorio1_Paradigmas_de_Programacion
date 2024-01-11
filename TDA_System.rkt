@@ -1,10 +1,10 @@
 #lang racket
 
-(require "TDA_Chatbot_21065666_VeraRojas.rkt")
-(require "TDA_User_21065666_VeraRojas.rkt")
-(require "TDA_Chathistory_21065666_VeraRojas.rkt")
-(require "TDA_Flow_21065666_VeraRojas.rkt")
-(require "TDA_Option_21065666_VeraRojas.rkt")
+(require "TDA_Chatbot.rkt")
+(require "TDA_User.rkt")
+(require "TDA_Chathistory.rkt")
+(require "TDA_Flow.rkt")
+(require "TDA_Option.rkt")
 
 
 ;######################################################################################

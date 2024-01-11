@@ -1,2 +1,18 @@
-# lab1_21065666_Vera
-Repositorio correspondiente al laboratorio 1 del ramo Paradigmas de Programación
+# **Laboratorio 1: Scheme - Dr. Racket**
+
+* Autor: Agustín Vera
+* Semestre: 2023-2
+* Asignatura: Paradigmas de Programación
+
+---
+
+## **Dr. Racket**
+
+* Software utilizado: [**Dr. Racket**](https://racket-lang.org/ "Dr. Racket")
+* Versión: 8.7
+
+---
+
+<p align="center">
+  <img src="https://racket-lang.org/img/racket-logo.svg" alt="Dr. Racket Logo">
+</p>
